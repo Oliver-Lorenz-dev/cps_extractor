@@ -40,7 +40,7 @@ class Parser:
             required=False,
             help="Length of blast hits to add to the cps sequence",
             default=2500,
-            type=int
+            type=int,
         )
 
         args = parser.parse_args(vargs)

@@ -27,7 +27,7 @@ def main(args):
     sample_name = args.output.split(".fa")[0]
     out_dir = str()
     if "/" in sample_name:
-        out_dir = sample_name.rsplit('/', 1)[0]
+        out_dir = sample_name.rsplit("/", 1)[0]
         sample_name = sample_name.split("/")[-1]
 
     cds_gff = Annotator.get_cds_annotations(
@@ -40,9 +40,13 @@ def main(args):
 
     mutations = Annotator.find_mutations(cds_fna)
     if out_dir != str():
-        Annotator.write_disruptive_mutations_file(f"{out_dir}/{sample_name}_mutations.csv", mutations)
+        Annotator.write_disruptive_mutations_file(
+            f"{out_dir}/{sample_name}_mutations.csv", mutations
+        )
     else:
-        Annotator.write_disruptive_mutations_file(f"{sample_name}_mutations.csv", mutations)
+        Annotator.write_disruptive_mutations_file(
+            f"{sample_name}_mutations.csv", mutations
+        )
 
 
 if __name__ == "__main__":
