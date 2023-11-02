@@ -39,7 +39,7 @@ class Parser:
             "--hit-length",
             required=False,
             help="Length of blast hits to add to the cps sequence",
-            default=5000,
+            default=2500,
             type=int
         )
 
