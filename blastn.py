@@ -11,9 +11,10 @@ logging.basicConfig(
 
 
 class Blast:
-    def __init__(self, ref: str, query: str):
+    def __init__(self, ref: str, query: str, hit_length: int):
         self.ref = ref
         self.query = query
+        self.hit_length = hit_length
 
     def run_blastn(self) -> str:
         query_basename = self.query.split(".f")[0]
@@ -34,7 +35,7 @@ class Blast:
             for hit in query.findall(".//Hit"):
                 hit_length = int(hit.find(".//Hit_len").text)
                 hit_def = hit.find(".//Hit_def").text
-                if int(hit_length) >= 5000:
+                if int(hit_length) >= self.hit_length:
                     for hsp in hit.findall(".//Hsp"):
                         q_sequence = hsp.find(".//Hsp_qseq").text
                         hit_start = int(hsp.find(".//Hsp_hit-from").text)
@@ -45,7 +46,7 @@ class Blast:
                         else:
                             seq_length = int(hit_start) - int(hit_end)
                         hit_frame = hsp.find(".//Hsp_hit-frame").text
-                        if int(aln_len) >= 5000:
+                        if int(aln_len) >= self.hit_length:
                             blast_result = {
                                 "hit_start": hit_start,
                                 "hit_end": hit_end,
@@ -198,7 +199,8 @@ class Blast:
 
     def write_fasta(self, sequence: str, output_file: str):
         fasta_output = output_file.split(".")[0]
-        print(f"seq:{sequence}")
+        if "/" in fasta_output:
+            fasta_output = fasta_output.split("/")[-1]
         with open(output_file, "w") as fasta:
             fasta.write(f">{fasta_output}\n")
             fasta.write(sequence)
@@ -215,7 +217,7 @@ class Blast:
             for hit in query.findall(".//Hit"):
                 hit_length = int(hit.find(".//Hit_len").text)
                 hit_def = hit.find(".//Hit_def").text
-                if int(hit_length) >= 5000:
+                if int(hit_length) >= self.hit_length:
                     for hsp in hit.findall(".//Hsp"):
                         q_sequence = hsp.find(".//Hsp_qseq").text
                         hit_start = int(hsp.find(".//Hsp_hit-from").text)
@@ -226,7 +228,7 @@ class Blast:
                         else:
                             seq_length = int(hit_start) - int(hit_end)
                         hit_frame = hsp.find(".//Hsp_hit-frame").text
-                        if int(aln_len) >= 5000:
+                        if int(aln_len) >= self.hit_length:
                             blast_result = {
                                 "hit_start": hit_start,
                                 "hit_end": hit_end,

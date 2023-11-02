@@ -33,7 +33,15 @@ class Parser:
             required=True,
             help="Name of prodigal training file used for annotation",
         )
-        # optional = parser.add_argument_group("optional")
+        optional = parser.add_argument_group("optional")
+        optional.add_argument(
+            "-l",
+            "--hit-length",
+            required=False,
+            help="Length of blast hits to add to the cps sequence",
+            default=5000,
+            type=int
+        )
 
         args = parser.parse_args(vargs)
 
