@@ -6,12 +6,6 @@ import os
 import pybedtools
 from Bio import SeqIO
 
-logging.basicConfig(
-    filename=f"cps_extractor_{datetime.datetime.now().strftime('%Y-%m-%d %H:%M').replace(' ','-')}_annotation.log",
-    encoding="utf-8",
-    level=logging.INFO,
-)
-
 
 class Annotation:
     def __init__(self, cps_fasta: str, annotation_training_file: str):

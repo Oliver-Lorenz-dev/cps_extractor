@@ -4,7 +4,7 @@ import logging
 import datetime
 
 logging.basicConfig(
-    filename=f"cps_extractor_{datetime.datetime.now().strftime('%Y-%m-%d %H:%M').replace(' ','-')}_blast.log",
+    filename=f"cps_extractor_{datetime.datetime.now().strftime('%Y-%m-%d %H:%M').replace(' ','-')}.log",
     encoding="utf-8",
     level=logging.INFO,
 )
